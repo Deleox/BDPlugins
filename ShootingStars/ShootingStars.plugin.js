@@ -4,7 +4,7 @@
  * @version 1.0.0
  * @author Deleox001
  * @authorId 1156430974008184962
- * @source https://github.com/Deleox/
+ * @source https://github.com/Deleox/BDPlugins/
  */
 
 class ShootingStars {
