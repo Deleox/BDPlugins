@@ -2,7 +2,7 @@
  * @name Shooting Stars
  * @description Adds a section to the Discord #app-mount area with the ID "ShootingStars"
  * @version 1.0.0
- * @author Deleox001
+ * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/ShootingStars/ShootingStars.plugin.js
  * Original CodePen By Delroy Prithvi - https://codepen.io/delroyprithvi/pen/LYyJROR
