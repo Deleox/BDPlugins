@@ -18,6 +18,10 @@ body{
       align-items: center;
       z-index: 1000; /* Ensure it sits above other elements */
       border-bottom: solid 2px #373a40; 
+      user-select: none; /* Disable text selection */
+      -webkit-user-select: none; /* Disable text selection in Safari */
+      -moz-user-select: none; /* Disable text selection in Firefox */
+      -ms-user-select: none; /* Disable text selection in Internet Explorer */
   }
   #SSBOX {
     position: absolute;
@@ -31,7 +35,14 @@ body{
     text-align: center;
   
   }
-  
+  #ShootingStars{
+    text-decoration: none;
+    color: inherit;
+    user-select: none; /* Disable text selection */
+    -webkit-user-select: none; /* Disable text selection in Safari */
+    -moz-user-select: none; /* Disable text selection in Firefox */
+    -ms-user-select: none; /* Disable text selection in Internet Explorer */
+  }
   #SSImage {
     background-image: url(https://r2.e-z.host/6798de0b-3ee9-4ede-b93a-0fe13d1fa1a0/7wfktyad.gif);
     background-repeat: no-repeat;
