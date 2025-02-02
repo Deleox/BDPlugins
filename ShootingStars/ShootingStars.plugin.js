@@ -1,7 +1,7 @@
 /**
  * @name Shooting Stars
  * @description Adds a section to the Discord #app-mount area with the ID "ShootingStars"
- * @version 1.0.0
+ * @version 1.0.4
  * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/ShootingStars/ShootingStars.plugin.js
@@ -42,12 +42,17 @@ class ShootingStars {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = 'https://deleox.github.io/BDPlugins/ShootingStars/CSS/Stars.CSS'; // Update this with the actual path to your CSS file
-        document.head.appendChild
+        document.head.appendChild(link)
 
         // Append the new element to the #app-mount area
         const appMount = document.querySelector('#app-mount');
         if (appMount) {
             appMount.appendChild(section);
+        }
+        else
+        {
+            console.log('I feel like if you see this error you have a bigger problem.');
+            console.log('#app-mount element not found.');
         }
     }
 
