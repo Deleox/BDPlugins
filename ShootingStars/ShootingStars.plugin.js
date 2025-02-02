@@ -41,7 +41,7 @@ class ShootingStars {
         // Load external CSS file dynamically
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = 'https://deleox.github.io/Discord/CSS/TEST.css'; // Update this with the actual path to your CSS file
+        link.href = 'https://deleox.github.io/BDPlugins/ShootingStars/CSS/Stars.CSS'; // Update this with the actual path to your CSS file
         document.head.appendChild
 
         // Append the new element to the #app-mount area
