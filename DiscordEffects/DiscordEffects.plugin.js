@@ -38,7 +38,7 @@ const config = {
             items:[
                 "TODO: Refine plugin code",
                 "TODO: Add more effects",
-                "I FEEL LIKE IM FORGETTING SOMETHING!"
+                "I WAS FORGETTING SOMETHING"
             ]
         }
     ],
