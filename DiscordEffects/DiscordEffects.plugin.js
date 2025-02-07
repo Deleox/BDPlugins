@@ -226,11 +226,11 @@ module.exports = class DiscordEffects {
             const link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = this.settings.effect === 'shootingStars'
-                ? 'https://deleox.github.io/BDPlugins/DiscordEffects/CSS/Stars.css'
+                ? 'https://deleox.github.io/BDPlugins/DiscordEffects/CSS/Stars.CSS'
                 : this.settings.effect === 'snowflakes'
-                    ? 'https://deleox.github.io/BDPlugins/DiscordEffects/Snowflakes.css'
+                    ? 'https://deleox.github.io/BDPlugins/DiscordEffects/CSS/Snowflakes.css'
                     : this.settings.effect === 'rain'
-                        ? 'https://deleox.github.io/BDPlugins/DiscordEffects/Rain.css'
+                        ? 'https://deleox.github.io/BDPlugins/DiscordEffects/CSS/Rain.css'
                         : 'https://deleox.github.io/BDPlugins/DiscordEffects/Blank.CSS';
             link.id = 'DiscordEffectsStyle';
             document.head.appendChild(link);
