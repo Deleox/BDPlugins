@@ -1,7 +1,7 @@
 /**
- * @name Discord Effects
- * @description Adds the ability to have Effects on your discord (Originally ShootingStars).
- * @version 2.0.0
+ * @name DiscordEffects
+ * @description Adds the ability to put effects on your discord.
+ * @version 2.0.2
  * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/ShootingStars/ShootingStars.plugin.js
@@ -20,14 +20,16 @@ const config = {
                 "Added Snowflake and Rain Effects.",
                 "Added modular effect colors using Color Pickers.",
                 "Added categories for each effect.",
-                "Added ability for it to work without a theme, doesn't appear infront of settings menu however."
+                "Added ability for it to work without a theme.",
+                "Added opacity control for both Rain and Snowflakes"
             ]
         },
         {
             title: "Fixes",
             type: "fixed",
             items: [
-                "Fixed a bug where pasting a large amount of text in chat would cause discord to feel insecure about its height."
+                "Fixed a bug where pasting a large amount of text in chat would cause discord to feel insecure about its height.",
+                "Fixed a bug where it would show behind the Settings Menu and Channel Header by setting z-index to 101 any lower and it will hide behind these two."
             ]
         },
         {
@@ -117,6 +119,16 @@ const config = {
                     value: "#ffffff", 
                     colors: null,
                     inline: true
+                },
+                {
+                    type: "number",
+                    id: "flakeopacity",
+                    name: "Snow Opacity",
+                    note: "Set the opacity for the Snow",
+                    value: .5,
+                    min: 0,
+                    max: 1,
+                    step: 10
                 }
             ]
         },
@@ -135,6 +147,16 @@ const config = {
                     value: "#ffffff", 
                     colors: null,
                     inline: true
+                },
+                {
+                    type: "number",
+                    id: "rainopacity",
+                    name: "Rain Opacity",
+                    note: "Set the opacity for the rain",
+                    value: .5,
+                    min: 0,
+                    max: 1,
+                    step: 10
                 }
             ]
         }   
@@ -186,17 +208,17 @@ module.exports = class DiscordEffects {
         section.style.height = '100vh';
         section.style.overflow = 'hidden';
         section.style.pointerEvents = 'none';
+        section.style.zIndex = '101'; // Making it 101 causes it to show above the channel header and settings menu
     
         for (let i = 0; i < this.settings.spanCount; i++) {
             const span = document.createElement('span');
             span.style.position = 'absolute';
-
             if (this.settings.effect === 'snowflakes') {
                 span.style.top = '-10px';
                 span.style.width = '10px';
                 span.style.height = '10px';
                 span.style.background = this.settings.flakecolor || 'white';
-                span.style.opacity = '0.8';
+                span.style.opacity = this.settings.flakeopacity;
                 span.style.borderRadius = '50%';
                 span.style.left = `${Math.random() * 100}%`;
                 span.style.animationDelay = `${Math.random() * 5}s`;
@@ -208,8 +230,8 @@ module.exports = class DiscordEffects {
                 span.style.top = '-10px';
                 span.style.width = '2px';
                 span.style.height = '20px';
-                span.style.background = this.settings.raincolor || 'linear-gradient(to bottom, rgb(255, 255, 255), rgb(255, 255, 255))';
-                span.style.opacity = '0.6';
+                span.style.background = this.settings.raincolor || 'linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.2))';
+                span.style.opacity = this.settings.rainopacity;
                 span.style.borderRadius = '20%';
                 span.style.left = `${Math.random() * 100}%`;
                 span.style.animationDelay = `${Math.random() * 1}s`;
