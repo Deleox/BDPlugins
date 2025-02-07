@@ -1,0 +1,27 @@
+#DiscordEffects {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-size: cover;
+	z-index: -1;
+}
+
+#DiscordEffects span {
+	position: absolute;
+	top: -10px;
+	width: 2px;
+	height: 20px;
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
+	opacity: 0.6;
+	border-radius: 20%;
+	animation: fall 1s linear infinite;
+}
+
+@keyframes fall {
+	to {
+		transform: translateY(100vh);
+		opacity: 0;
+	}
+}
