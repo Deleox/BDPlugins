@@ -1,28 +1,18 @@
 /**
  * @name DiscordEffects
  * @description Adds the ability to put effects on your discord.
- * @version 2.1.2
+ * @version 2.0.2
  * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/ShootingStars/ShootingStars.plugin.js
  * @website https://e-z.bio/MSFR
  * Original Shooting Star CodePen By Delroy Prithvi - https://codepen.io/delroyprithvi/pen/LYyJROR
  * First plugin and learning experience so expect bugs and potentially awful code TT-TT
- * Thank you to Vincent Garreau for Particles.js - https://vincentgarreau.com/particles.js/
-*/
+ */
 
 
 const config = {
     changelog: [
-        {
-            title: "New Particles",
-            type: "added",
-            items: [
-                "Added Particles.js from [Here](https://cdn.jsdelivr.net/npm/particles.js) I believe this still follows the guidelines.",
-                "Added two Categories for Particles.js settings to enable finetuning and to reduce bloat in one category",
-                "Changed z-index and added ability to manually edit it in settings"
-            ]
-        },
         {
             title: "Release + New Stuff",
             type: "added",
@@ -30,7 +20,8 @@ const config = {
                 "Added Snowflake and Rain Effects.",
                 "Added modular effect colors using Color Pickers.",
                 "Added categories for each effect.",
-                "Added ability for it to work without a theme."
+                "Added ability for it to work without a theme.",
+                "Added opacity control for both Rain and Snowflakes"
             ]
         },
         {
@@ -47,7 +38,7 @@ const config = {
             items:[
                 "TODO: Refine plugin code",
                 "TODO: Add more effects",
-                "I FEEL LIKE IM FORGETTING SOMETHING!"
+                "I WAS FORGETTING SOMETHING"
             ]
         }
     ],
@@ -61,8 +52,7 @@ const config = {
             options: [
                 {label: "Shooting Stars", value: "shootingStars"},
                 {label: "Snowflakes", value: "snowflakes"},
-                {label: "Rain", value: "rain"},
-                {label: "Particles", value: "particles"}
+                {label: "Rain", value: "rain"}
             ]
         },
         {
@@ -77,7 +67,7 @@ const config = {
                     id: "mode",
                     name: "Mode",
                     note: "Toggle between live (GitHub CSS) and standalone (plugin CSS)",
-                    note: "Do not use for ShootingStars or Particles.JS",
+                    note: "Do not use for ShootingStars",
                     value: false // false for standalone, true for live
                 },
                 {
@@ -89,14 +79,7 @@ const config = {
                     min: 0,
                     max: 50,
                     markers: [10, 20, 30, 40, 50]
-                },
-                {   
-                    type: "number",
-                    id: "zindexamount",
-                    name: "Set Z-Index",
-                    note: "Allows modifying the z-index to reduce bugs with particles.",
-                    value: 1,
-                },
+                }
             ]
         },
 
@@ -176,135 +159,7 @@ const config = {
                     step: 10
                 }
             ]
-        },
-        {
-            type: "category",
-            id: "ParticleCat",
-            name: "ParticlesJS Settings PT.1",
-            collapsible: true,
-            shown: false,
-            settings: [
-                {
-                    type: "number",
-                    id: "particleamount",
-                    name: "Particle Amount",
-                    note: "Sets how many particles exist at one time - Default: 20",
-                    value: 20,
-                    min: 0,
-                    max: 100
-                },
-                {
-                    type: "number",
-                    id: "densityvalue",
-                    name: "Particle Density",
-                    note: "Sets the density of the area",
-                    value: 800,
-                    min: 0,
-                    max: 1000
-                },
-                {
-                    type: "switch",
-                    id: "densityenable",
-                    name: "Enable Density",
-                    note: "Enabled Area Density",
-                    value: true
-                },
-                {
-                    type: "color", 
-                    id: "particlecolor", 
-                    name: "Particle Colorpicker", 
-                    note: "Colorpicker for changing the color of the Particles - Default #ffffff", 
-                    value: "#ffffff", 
-                    colors: null,
-                    inline: true
-                },
-                {
-                    type: "dropdown",
-                    id: "particleshape",
-                    name: "Particle Shape",
-                    note: "Select the shape of the Particles",
-                    value: "circle",
-                    options: [
-                        {label: "Circle", value: "circle"},
-                        {label: "Edge", value: "edge"},
-                        {label: "Triangle", value: "triangle"},
-                        {label: "Polygon", value: "polygon"},
-                        {label: "Star", value : "star"}
-                    ]
-                },
-                {
-                    type: "switch",
-                    id: "linelinking",
-                    name: "Link Lines",
-                    note: "Allows the lines to be linked",
-                    value: true
-                },
-                {
-                    type: "number",
-                    id: "linedistance",
-                    name: "Line Link Distance",
-                    notes: "The Distance the lines with link from - Default: 150",
-                    value: 150
-                }
-
-            ]
-        },
-        {
-            type: "category",
-            id: "ParticleCat2",
-            name: "ParticlesJS Settings PT.2",
-            collapsible: true,
-            shown: false,
-            settings: [
-                {
-                    type: "number",
-                    id: "particleopacity",
-                    name: "Particle Opacity",
-                    notes: "Sets the opacity of the Particles - Default: 0.5",
-                    value: 0.5,
-                    min: 0,
-                    max: 1,
-                    step: .1
-                },
-                {
-                    type: "number",
-                    id: "particlesize",
-                    name: "Particle Size",
-                    notes: "Sets the size of the Particles - Default: 5",
-                    value: 5,
-                    min: 0,
-                    max: 10,
-                    step: .1
-                },
-                {
-                    type: "number",
-                    id: "particlespeed",
-                    name: "Particle Speed",
-                    notes: "Sets the speed of the particles movement - Default: 6",
-                    value: 6,
-                    min: 0,
-                    step: .1
-                },
-                {
-                    type: "dropdown",
-                    id: "particledirection",
-                    name: "Particle Direction",
-                    notes: "Sets the direction of the particles movement - Default: none",
-                    value: "none",
-                    options: [
-                        {label: "None", value: "none"},
-                        {label: "Top", value: "top"},
-                        {label: "Top Right", value: "topright"},
-                        {label: "Top Left", value: "topleft"},
-                        {label: "Right", value: "right"},
-                        {label: "Bottom Right", value : "bottomright"},
-                        {label: "Bottom", value: "bottom"},
-                        {label: "Bottom Left", value: "bottomleft"},
-                        {label: "Left", value : "left"}
-                    ]
-                }
-            ]
-        }  
+        }   
     ]
 };
 
@@ -325,7 +180,7 @@ module.exports = class DiscordEffects {
             this.api.UI.showChangelogModal({
                 title: this.meta.name,
                 subtitle: this.meta.version,
-                blurb: "Public Release of [Discord Effects](https://deleox.github.io/BDPlugins/DiscordEffects/DiscordEffects.plugin.js), [My bio](https://e-z.bio/retronomicon).",
+                blurb: "Public Release of DiscordEffects.",
                 changes: config.changelog
             });
             this.api.Data.save("version", this.meta.version);
@@ -353,7 +208,7 @@ module.exports = class DiscordEffects {
         section.style.height = '100vh';
         section.style.overflow = 'hidden';
         section.style.pointerEvents = 'none';
-        section.style.zIndex = this.settings.zindexamount;
+        section.style.zIndex = '101'; // Making it 101 causes it to show above the channel header and settings menu
     
         for (let i = 0; i < this.settings.spanCount; i++) {
             const span = document.createElement('span');
@@ -448,160 +303,29 @@ module.exports = class DiscordEffects {
                 }
             `).join('');
         }
+
+        const shootingStarsStyles = (i) => `
+            top: 0;
+            right: ${80 * (i + 1)}px;
+            left: initial;
+            animation-delay: ${0.2 * i}s;
+            animation-duration: ${1 + 0.25 * ((i % 4) + 1)}s;
+        `;
     
-        const shootingStarsStyles = (i) => {
-            const leftPosition = Math.random() * 100;
-            console.log(`Shooting Star span ${i} left position: ${leftPosition}%`);
-            return `
-                top: 0;
-                right: ${80 * (i + 1)}px;
-                left: ${leftPosition}%;
-                animation-delay: ${0.2 * i}s;
-                animation-duration: ${1 + 0.25 * ((i % 4) + 1)}s;
-            `;
-        };
+        const snowflakesStyles = (i) => `
+            left: ${Math.random() * 100}%;
+            animation-delay: ${Math.random() * 5}s;
+            animation-duration: ${5 + Math.random() * 5}s;
+        `;
     
-        const snowflakesStyles = (i) => {
-            const leftPosition = Math.random() * 100;
-            console.log(`Snowflake span ${i} left position: ${leftPosition}%`);
-            return `
-                left: ${leftPosition}%;
-                animation-delay: ${Math.random() * 5}s;
-                animation-duration: ${5 + Math.random() * 5}s;
-            `;
-        };
-    
-        const rainStyles = (i) => {
-            const leftPosition = Math.random() * 100;
-            console.log(`Rain span ${i} left position: ${leftPosition}%`);
-            return `
-                left: ${leftPosition}%;
-                animation-delay: ${Math.random() * 1}s;
-                animation-duration: ${0.5 + Math.random() * 1}s;
-                overflow: hidden;
-            `;
-        };
-    
-        function generateRandomKeyframes(count) {
-            return Array.from({ length: count }, (_, i) => `
-                @keyframes randomPosition${i} {
-                    0% { left: ${Math.random() * 100}%; }
-                    100% { left: ${Math.random() * 100}%; }
-                }
-            `).join('');
-        }
+        const rainStyles = (i) => `
+            left: ${Math.random() * 100}%;
+            animation-delay: ${Math.random() * 1}s;
+            animation-duration: ${0.5 + Math.random() * 1}s;
+            overflow: hidden;
+        `;
     
         switch(this.settings.effect) {
-            case 'particles':
-                const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/particles.js';
-            document.head.appendChild(script);
-
-            script.onload = () => {
-                particlesJS('DiscordEffects', {
-                    particles: {
-                        number: {
-                            value: this.settings.particleamount,
-                            density: {
-                                enable: this.settings.densityenable,
-                                value_area: this.settings.densityvalue
-                            }
-                        },
-                        color: {
-                            value: this.settings.particlecolor
-                        },
-                        shape: {
-                            type: this.settings.particleshape,
-                            stroke: {
-                                width: 0,
-                                color: this.settings.particlecolor
-                            }
-                        },
-                        opacity: {
-                            value: this.settings.particleopacity,
-                            random: false,
-                            anim: {
-                                enable: false,
-                                speed: 1,
-                                opacity_min: 0.1,
-                                sync: false
-                            }
-                        },
-                        size: {
-                            value: this.settings.particlesize,
-                            random: true,
-                            anim: {
-                                enable: false,
-                                speed: 40,
-                                size_min: 0.1,
-                                sync: false
-                            }
-                        },
-                        line_linked: {
-                            enable: this.settings.linelinking,
-                            distance: 150,
-                            color: '#ffffff',
-                            opacity: 0.4,
-                            width: 1
-                        },
-                        move: {
-                            enable: true,
-                            speed: this.settings.particlespeed,
-                            direction: this.settings.particledirection,
-                            random: false,
-                            straight: false,
-                            out_mode: 'out',
-                            bounce: false,
-                            attract: {
-                                enable: false,
-                                rotateX: 600,
-                                rotateY: 1200
-                            }
-                        }
-                    },
-                    interactivity: {
-                        detect_on: 'canvas',
-                        events: {
-                            onhover: {
-                                enable: true,
-                                mode: 'repulse'
-                            },
-                            onclick: {
-                                enable: true,
-                                mode: 'push'
-                            },
-                            resize: true
-                        },
-                        modes: {
-                            grab: {
-                                distance: 400,
-                                line_linked: {
-                                    opacity: 1
-                                }
-                            },
-                            bubble: {
-                                distance: 400,
-                                size: 40,
-                                duration: 2,
-                                opacity: 8,
-                                speed: 3
-                            },
-                            repulse: {
-                                distance: 200,
-                                duration: 0.4
-                            },
-                            push: {
-                                particles_nb: 4
-                            },
-                            remove: {
-                                particles_nb: 2
-                            }
-                        }
-                    },
-                });
-            };
-            return ``; // No additional styles needed here for particles.js - cant figure out the interactivity though
-
             case 'shootingStars':
                 return `
                     #DiscordEffects {
@@ -662,7 +386,6 @@ module.exports = class DiscordEffects {
                     }
     
                     ${generateSpanStyles(this.settings.spanCount, shootingStarsStyles)}
-                    ${generateRandomKeyframes(this.settings.spanCount)}
                 `;
             case 'snowflakes':
                 return `
@@ -695,7 +418,6 @@ module.exports = class DiscordEffects {
                     }
     
                     ${generateSpanStyles(this.settings.spanCount, snowflakesStyles)}
-                    ${generateRandomKeyframes(this.settings.spanCount)}
                 `;
             case 'rain':
                 return `
@@ -718,7 +440,6 @@ module.exports = class DiscordEffects {
                         opacity: 0.6;
                         border-radius: 20%;
                         animation: fall 1s linear infinite;
-                        animation-name: randomPosition${Math.floor(Math.random() * this.settings.spanCount)};
                     }
     
                     @keyframes fall {
@@ -729,13 +450,9 @@ module.exports = class DiscordEffects {
                     }
     
                     ${generateSpanStyles(this.settings.spanCount, rainStyles)}
-                    ${generateRandomKeyframes(this.settings.spanCount)}
                 `;
         }
     }
-    
-    
-    
     
     getSettingsPanel() {
         return BdApi.UI.buildSettingsPanel({
@@ -748,8 +465,7 @@ module.exports = class DiscordEffects {
                             return {
                                 ...subSetting,
                                 value: subValue,
-                                disabled: subSetting.id === 'mode' && this.settings.effect === 'shootingStars',
-                                disabled: subSetting.id === 'mode' && this.settings.effect === 'particles'
+                                disabled: subSetting.id === 'mode' && this.settings.effect === 'shootingStars'
                             };
                         })
                     };
@@ -758,8 +474,7 @@ module.exports = class DiscordEffects {
                     return {
                         ...setting,
                         value: settingValue,
-                        disabled: setting.id === 'mode' && this.settings.effect === 'shootingStars',
-                        disabled: setting.id === 'mode' && this.settings.effect === 'particles'
+                        disabled: setting.id === 'mode' && this.settings.effect === 'shootingStars'
                     };
                 }
             }),
