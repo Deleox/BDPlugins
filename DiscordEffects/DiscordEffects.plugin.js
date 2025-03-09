@@ -1,7 +1,7 @@
 /**
  * @name DiscordEffects
  * @description Adds the ability to put effects on your discord.
- * @version 2.1.2
+ * @version 2.1.3
  * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/ShootingStars/ShootingStars.plugin.js
@@ -14,6 +14,13 @@
 
 const config = {
     changelog: [
+        {
+            title: "Bugfix",
+            type: "fixed",
+            items: [
+                "Fixed a bug causing both Rain and Snowflake opacity options not being able to be changed properly"
+            ]
+        },
         {
             title: "New Particles",
             type: "added",
@@ -47,7 +54,7 @@ const config = {
             items:[
                 "TODO: Refine plugin code",
                 "TODO: Add more effects",
-                "I FEEL LIKE IM FORGETTING SOMETHING!"
+                "I WAS FORGETTING SOMETHING!"
             ]
         }
     ],
@@ -145,7 +152,7 @@ const config = {
                     value: .5,
                     min: 0,
                     max: 1,
-                    step: 10
+                    step: .1
                 }
             ]
         },
@@ -173,7 +180,7 @@ const config = {
                     value: .5,
                     min: 0,
                     max: 1,
-                    step: 10
+                    step: .1
                 }
             ]
         },
