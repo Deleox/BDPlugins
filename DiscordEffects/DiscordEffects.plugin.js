@@ -1,10 +1,10 @@
 /**
  * @name DiscordEffects
  * @description Adds the ability to put effects on your discord.
- * @version 2.1.3
+ * @version 2.1.4
  * @author Deleox
  * @authorId 1156430974008184962
- * @source https://github.com/Deleox/BDPlugins/blob/main/ShootingStars/ShootingStars.plugin.js
+ * @source https://github.com/Deleox/BDPlugins/blob/main/DiscordEffects/DiscordEffects.plugin.js
  * @website https://e-z.bio/MSFR
  * Original Shooting Star CodePen By Delroy Prithvi - https://codepen.io/delroyprithvi/pen/LYyJROR
  * First plugin and learning experience so expect bugs and potentially awful code TT-TT
@@ -14,6 +14,14 @@
 
 const config = {
     changelog: [
+        {
+            title: "Deprecated Code Changed",
+            type: "fixed",
+            items: [
+                "Changed from using deprecated code."
+            ]
+
+        },
         {
             title: "Bugfix",
             type: "fixed",
@@ -92,7 +100,7 @@ const config = {
                     id: "spanCount",
                     name: "Span Count",
                     note: "Adjust the number of spans for animation - Due to the usage of spans, higher may cause lag",
-                    value: 20, // Default span count
+                    value: 10, // Default span count
                     min: 0,
                     max: 50,
                     markers: [10, 20, 30, 40, 50]
@@ -319,7 +327,7 @@ module.exports = class DiscordEffects {
     constructor(meta) {
         this.meta = meta;
         this.api = new BdApi(this.meta.name);
-        this.settings = BdApi.loadData(this.meta.name, "settings") || config.settings.reduce((acc, setting) => {
+        this.settings = this.api.Data.load("settings") || config.settings.reduce((acc, setting) => {
             acc[setting.id] = setting.value;
             return acc;
         }, {});
@@ -338,6 +346,21 @@ module.exports = class DiscordEffects {
             this.api.Data.save("version", this.meta.version);
         }
         this.addSection();
+        this.firstlaunch();
+        
+    }
+
+    firstlaunch(){
+        if (!this.api.Data.load('firstlaunch')) {
+            console.log("First Launch Detected, Creating Config.");
+            this.api.Data.save("settings", {
+                "effect": "shootingStars",
+                "spanCount": "10"
+            });
+            this.api.Data.save("firstlaunch", "false");
+        } else {
+            console.log("Config already exists.");
+        }
     }
 
     stop() {
@@ -423,7 +446,7 @@ module.exports = class DiscordEffects {
             console.error('#app-mount element not found.');
         }
     }
-    
+
 
     removeSection() {
         const section = document.querySelector('#DiscordEffects');
@@ -443,7 +466,7 @@ module.exports = class DiscordEffects {
     }
 
 
-    
+
 
     getEffectStyles() {
         const angle = this.settings.angle || 315;
@@ -772,7 +795,7 @@ module.exports = class DiscordEffects {
             }),
             onChange: (category, id, value) => {
                 this.settings[id] = value;
-                BdApi.saveData(this.meta.name, "settings", this.settings);
+                this.api.Data.save("settings", this.settings);
                 if (id === 'spanCount') {
                     this.updateSpans();
                 } else {
