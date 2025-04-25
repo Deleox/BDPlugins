@@ -91,7 +91,7 @@ const config = {
                     type: "slider",
                     id: "spanCount",
                     name: "Span Count",
-                    note: "Adjust the number of spans for animation - Due to the usage of spans, higher may cause lag",
+                    note: "Adjust the number of spans for animation - More spans = more lag",
                     value: 10, // Default span count
                     min: 0,
                     max: 50,
