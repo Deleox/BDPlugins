@@ -18,7 +18,8 @@ const config = {
             title: "Deprecated Code Changed",
             type: "fixed",
             items: [
-                "Changed from using deprecated code."
+                "Changed from using deprecated code.",
+                "Removed Unneeded Stuff"
             ]
 
         },
@@ -54,15 +55,6 @@ const config = {
             items: [
                 "Fixed a bug where pasting a large amount of text in chat would cause discord to feel insecure about its height.",
                 "Fixed a bug where it would show behind the Settings Menu and Channel Header by setting z-index to 101 any lower and it will hide behind these two."
-            ]
-        },
-        {
-            title: "Progress",
-            type: "progress",
-            items:[
-                "TODO: Refine plugin code",
-                "TODO: Add more effects",
-                "I WAS FORGETTING SOMETHING!"
             ]
         }
     ],
@@ -334,7 +326,6 @@ module.exports = class DiscordEffects {
     }
 
     start() {
-        BdApi.UI.showToast('She effect on my dis til i cord.');
         const savedVersion = this.api.Data.load("version");
         if (savedVersion !== this.meta.version) {
             this.api.UI.showChangelogModal({
@@ -630,7 +621,9 @@ module.exports = class DiscordEffects {
                     },
                 });
             };
-            return ``; // No additional styles needed here for particles.js - cant figure out the interactivity though
+            return ``; 
+            // No additional styles needed here for particles.js - cant figure out the interactivity though
+            // probably something i did and forgot about honestly.
 
             case 'shootingStars':
                 return `
