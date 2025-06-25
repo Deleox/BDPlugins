@@ -1,19 +1,26 @@
 /**
  * @name DiscordEffects
  * @description Adds the ability to put effects on your discord.
- * @version 2.1.4
+ * @version 2.1.5
  * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/DiscordEffects/DiscordEffects.plugin.js
  * @website https://e-z.bio/MSFR
  * Original Shooting Star CodePen By Delroy Prithvi - https://codepen.io/delroyprithvi/pen/LYyJROR
  * First plugin and learning experience so expect bugs and potentially awful code TT-TT
- * Thank you to Vincent Garreau for Particles.js - https://vincentgarreau.com/particles.js/
 */
-
 
 const config = {
     changelog: [
+        {
+            title: "BetterDiscord Compliance",
+            type: "fixed",
+            items: [
+                "Updated style injection to use BdApi.DOM.addStyle instead of direct DOM manipulation.",
+                "Removed Particles.js effect and related settings to address guideline concerns.",
+                "Particles may be re-added in the future in a way that complies with the guidelines."
+            ]
+        },
         {
             title: "Deprecated Code Changed",
             type: "fixed",
@@ -21,22 +28,12 @@ const config = {
                 "Changed from using deprecated code.",
                 "Removed Unneeded Stuff"
             ]
-
         },
         {
             title: "Bugfix",
             type: "fixed",
             items: [
                 "Fixed a bug causing both Rain and Snowflake opacity options not being able to be changed properly"
-            ]
-        },
-        {
-            title: "New Particles",
-            type: "added",
-            items: [
-                "Added Particles.js from [Here](https://cdn.jsdelivr.net/npm/particles.js) I believe this still follows the guidelines.",
-                "Added two Categories for Particles.js settings to enable finetuning and to reduce bloat in one category",
-                "Changed z-index and added ability to manually edit it in settings"
             ]
         },
         {
@@ -68,8 +65,7 @@ const config = {
             options: [
                 {label: "Shooting Stars", value: "shootingStars"},
                 {label: "Snowflakes", value: "snowflakes"},
-                {label: "Rain", value: "rain"},
-                {label: "Particles", value: "particles"}
+                {label: "Rain", value: "rain"}
             ]
         },
         {
@@ -79,14 +75,6 @@ const config = {
             collapsible: true,
             shown: false,
             settings: [
-                {
-                    type: "switch",
-                    id: "mode",
-                    name: "Mode",
-                    note: "Toggle between live (GitHub CSS) and standalone (plugin CSS)",
-                    note: "Do not use for ShootingStars or Particles.JS",
-                    value: false // false for standalone, true for live
-                },
                 {
                     type: "slider",
                     id: "spanCount",
@@ -101,12 +89,11 @@ const config = {
                     type: "number",
                     id: "zindexamount",
                     name: "Set Z-Index",
-                    note: "Allows modifying the z-index to reduce bugs with particles.",
+                    note: "Allows modifying the z-index to reduce bugs with effects.",
                     value: 1,
                 },
             ]
         },
-
         {
             type: "category",
             id: "ShootingStarCat",
@@ -123,11 +110,9 @@ const config = {
                     min: 0,
                     max: 360,
                     markers: [0, 90, 180, 270, 360]
-                    
                 }
             ]
         },
-
         {
             type: "category",
             id: "SnowflakeCat",
@@ -183,135 +168,7 @@ const config = {
                     step: .1
                 }
             ]
-        },
-        {
-            type: "category",
-            id: "ParticleCat",
-            name: "ParticlesJS Settings PT.1",
-            collapsible: true,
-            shown: false,
-            settings: [
-                {
-                    type: "number",
-                    id: "particleamount",
-                    name: "Particle Amount",
-                    note: "Sets how many particles exist at one time - Default: 20",
-                    value: 20,
-                    min: 0,
-                    max: 100
-                },
-                {
-                    type: "number",
-                    id: "densityvalue",
-                    name: "Particle Density",
-                    note: "Sets the density of the area",
-                    value: 800,
-                    min: 0,
-                    max: 1000
-                },
-                {
-                    type: "switch",
-                    id: "densityenable",
-                    name: "Enable Density",
-                    note: "Enabled Area Density",
-                    value: true
-                },
-                {
-                    type: "color", 
-                    id: "particlecolor", 
-                    name: "Particle Colorpicker", 
-                    note: "Colorpicker for changing the color of the Particles - Default #ffffff", 
-                    value: "#ffffff", 
-                    colors: null,
-                    inline: true
-                },
-                {
-                    type: "dropdown",
-                    id: "particleshape",
-                    name: "Particle Shape",
-                    note: "Select the shape of the Particles",
-                    value: "circle",
-                    options: [
-                        {label: "Circle", value: "circle"},
-                        {label: "Edge", value: "edge"},
-                        {label: "Triangle", value: "triangle"},
-                        {label: "Polygon", value: "polygon"},
-                        {label: "Star", value : "star"}
-                    ]
-                },
-                {
-                    type: "switch",
-                    id: "linelinking",
-                    name: "Link Lines",
-                    note: "Allows the lines to be linked",
-                    value: true
-                },
-                {
-                    type: "number",
-                    id: "linedistance",
-                    name: "Line Link Distance",
-                    notes: "The Distance the lines with link from - Default: 150",
-                    value: 150
-                }
-
-            ]
-        },
-        {
-            type: "category",
-            id: "ParticleCat2",
-            name: "ParticlesJS Settings PT.2",
-            collapsible: true,
-            shown: false,
-            settings: [
-                {
-                    type: "number",
-                    id: "particleopacity",
-                    name: "Particle Opacity",
-                    notes: "Sets the opacity of the Particles - Default: 0.5",
-                    value: 0.5,
-                    min: 0,
-                    max: 1,
-                    step: .1
-                },
-                {
-                    type: "number",
-                    id: "particlesize",
-                    name: "Particle Size",
-                    notes: "Sets the size of the Particles - Default: 5",
-                    value: 5,
-                    min: 0,
-                    max: 10,
-                    step: .1
-                },
-                {
-                    type: "number",
-                    id: "particlespeed",
-                    name: "Particle Speed",
-                    notes: "Sets the speed of the particles movement - Default: 6",
-                    value: 6,
-                    min: 0,
-                    step: .1
-                },
-                {
-                    type: "dropdown",
-                    id: "particledirection",
-                    name: "Particle Direction",
-                    notes: "Sets the direction of the particles movement - Default: none",
-                    value: "none",
-                    options: [
-                        {label: "None", value: "none"},
-                        {label: "Top", value: "top"},
-                        {label: "Top Right", value: "topright"},
-                        {label: "Top Left", value: "topleft"},
-                        {label: "Right", value: "right"},
-                        {label: "Bottom Right", value : "bottomright"},
-                        {label: "Bottom", value: "bottom"},
-                        {label: "Bottom Left", value: "bottomleft"},
-                        {label: "Left", value : "left"}
-                    ]
-                }
-            ]
-        }  
+        }
     ]
 };
 
@@ -338,19 +195,15 @@ module.exports = class DiscordEffects {
         }
         this.addSection();
         this.firstlaunch();
-        
     }
 
-    firstlaunch(){
+    firstlaunch() {
         if (!this.api.Data.load('firstlaunch')) {
-            console.log("First Launch Detected, Creating Config.");
             this.api.Data.save("settings", {
                 "effect": "shootingStars",
                 "spanCount": "10"
             });
             this.api.Data.save("firstlaunch", "false");
-        } else {
-            console.log("Config already exists.");
         }
     }
 
@@ -368,14 +221,14 @@ module.exports = class DiscordEffects {
         const section = document.createElement('div');
         section.id = 'DiscordEffects';
         section.style.position = 'fixed';
-        section.style.top = 0;
-        section.style.left = 0;
+        section.style.top = '0';
+        section.style.left = '0';
         section.style.width = '100%';
         section.style.height = '100vh';
         section.style.overflow = 'hidden';
         section.style.pointerEvents = 'none';
         section.style.zIndex = this.settings.zindexamount;
-    
+
         for (let i = 0; i < this.settings.spanCount; i++) {
             const span = document.createElement('span');
             span.style.position = 'absolute';
@@ -406,29 +259,15 @@ module.exports = class DiscordEffects {
                 span.style.animationIterationCount = 'infinite';
                 span.style.animationTimingFunction = 'linear';
             }
-    
             section.appendChild(span);
         }
-    
+
         if (this.settings.mode) {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = this.settings.effect === 'shootingStars'
-                ? 'https://deleox.github.io/BDPlugins/DiscordEffects/CSS/Stars.CSS'
-                : this.settings.effect === 'snowflakes'
-                    ? 'https://deleox.github.io/BDPlugins/DiscordEffects/CSS/Snowflakes.css'
-                    : this.settings.effect === 'rain'
-                        ? 'https://deleox.github.io/BDPlugins/DiscordEffects/CSS/Rain.css'
-                        : 'https://deleox.github.io/BDPlugins/DiscordEffects/Blank.CSS';
-            link.id = 'DiscordEffectsStyle';
-            document.head.appendChild(link);
+            // Will be removed upon a complete rebuild, i hate this.
         } else {
-            const style = document.createElement('style');
-            style.id = 'DiscordEffectsStyle';
-            style.textContent = this.getEffectStyles();
-            document.head.appendChild(style);
+            BdApi.DOM.addStyle('DiscordEffectsStyle', this.getEffectStyles());
         }
-    
+
         const appMount = document.querySelector('#app-mount');
         if (appMount) {
             appMount.appendChild(section);
@@ -438,30 +277,17 @@ module.exports = class DiscordEffects {
         }
     }
 
-
     removeSection() {
         const section = document.querySelector('#DiscordEffects');
         if (section) {
             section.remove();
         }
-
-        const link = document.querySelector('link#DiscordEffectsStyle');
-        if (link) {
-            link.remove();
-        }
-
-        const style = document.querySelector('#DiscordEffectsStyle');
-        if (style) {
-            style.remove();
-        }
+        BdApi.DOM.removeStyle('DiscordEffectsStyle');
     }
-
-
-
 
     getEffectStyles() {
         const angle = this.settings.angle || 315;
-    
+
         function generateSpanStyles(count, getStyles) {
             return Array.from({ length: count }, (_, i) => `
                 #DiscordEffects span:nth-child(${i + 1}) {
@@ -469,10 +295,9 @@ module.exports = class DiscordEffects {
                 }
             `).join('');
         }
-    
+
         const shootingStarsStyles = (i) => {
             const leftPosition = Math.random() * 100;
-            console.log(`Shooting Star span ${i} left position: ${leftPosition}%`);
             return `
                 top: 0;
                 right: ${80 * (i + 1)}px;
@@ -481,20 +306,18 @@ module.exports = class DiscordEffects {
                 animation-duration: ${1 + 0.25 * ((i % 4) + 1)}s;
             `;
         };
-    
+
         const snowflakesStyles = (i) => {
             const leftPosition = Math.random() * 100;
-            console.log(`Snowflake span ${i} left position: ${leftPosition}%`);
             return `
                 left: ${leftPosition}%;
                 animation-delay: ${Math.random() * 5}s;
                 animation-duration: ${5 + Math.random() * 5}s;
             `;
         };
-    
+
         const rainStyles = (i) => {
             const leftPosition = Math.random() * 100;
-            console.log(`Rain span ${i} left position: ${leftPosition}%`);
             return `
                 left: ${leftPosition}%;
                 animation-delay: ${Math.random() * 1}s;
@@ -502,7 +325,7 @@ module.exports = class DiscordEffects {
                 overflow: hidden;
             `;
         };
-    
+
         function generateRandomKeyframes(count) {
             return Array.from({ length: count }, (_, i) => `
                 @keyframes randomPosition${i} {
@@ -511,120 +334,8 @@ module.exports = class DiscordEffects {
                 }
             `).join('');
         }
-    
-        switch(this.settings.effect) {
-            case 'particles':
-                const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/particles.js';
-            document.head.appendChild(script);
 
-            script.onload = () => {
-                particlesJS('DiscordEffects', {
-                    particles: {
-                        number: {
-                            value: this.settings.particleamount,
-                            density: {
-                                enable: this.settings.densityenable,
-                                value_area: this.settings.densityvalue
-                            }
-                        },
-                        color: {
-                            value: this.settings.particlecolor
-                        },
-                        shape: {
-                            type: this.settings.particleshape,
-                            stroke: {
-                                width: 0,
-                                color: this.settings.particlecolor
-                            }
-                        },
-                        opacity: {
-                            value: this.settings.particleopacity,
-                            random: false,
-                            anim: {
-                                enable: false,
-                                speed: 1,
-                                opacity_min: 0.1,
-                                sync: false
-                            }
-                        },
-                        size: {
-                            value: this.settings.particlesize,
-                            random: true,
-                            anim: {
-                                enable: false,
-                                speed: 40,
-                                size_min: 0.1,
-                                sync: false
-                            }
-                        },
-                        line_linked: {
-                            enable: this.settings.linelinking,
-                            distance: 150,
-                            color: '#ffffff',
-                            opacity: 0.4,
-                            width: 1
-                        },
-                        move: {
-                            enable: true,
-                            speed: this.settings.particlespeed,
-                            direction: this.settings.particledirection,
-                            random: false,
-                            straight: false,
-                            out_mode: 'out',
-                            bounce: false,
-                            attract: {
-                                enable: false,
-                                rotateX: 600,
-                                rotateY: 1200
-                            }
-                        }
-                    },
-                    interactivity: {
-                        detect_on: 'canvas',
-                        events: {
-                            onhover: {
-                                enable: true,
-                                mode: 'repulse'
-                            },
-                            onclick: {
-                                enable: true,
-                                mode: 'push'
-                            },
-                            resize: true
-                        },
-                        modes: {
-                            grab: {
-                                distance: 400,
-                                line_linked: {
-                                    opacity: 1
-                                }
-                            },
-                            bubble: {
-                                distance: 400,
-                                size: 40,
-                                duration: 2,
-                                opacity: 8,
-                                speed: 3
-                            },
-                            repulse: {
-                                distance: 200,
-                                duration: 0.4
-                            },
-                            push: {
-                                particles_nb: 4
-                            },
-                            remove: {
-                                particles_nb: 2
-                            }
-                        }
-                    },
-                });
-            };
-            return ``; 
-            // No additional styles needed here for particles.js - cant figure out the interactivity though
-            // probably something i did and forgot about honestly.
-
+        switch (this.settings.effect) {
             case 'shootingStars':
                 return `
                     #DiscordEffects {
@@ -635,9 +346,9 @@ module.exports = class DiscordEffects {
                         height: 100vh;
                         background-size: cover;
                         animation: animateBg 50s linear infinite;
-                        z-index: 0;
+                        z-index: ${this.settings.zindexamount};
                     }
-    
+
                     @keyframes animateBg {
                         0%, 100% {
                             transform: scale(1);
@@ -646,7 +357,7 @@ module.exports = class DiscordEffects {
                             transform: scale(1.2);
                         }
                     }
-    
+
                     #DiscordEffects span {
                         position: absolute;
                         top: 50%;
@@ -659,7 +370,7 @@ module.exports = class DiscordEffects {
                         animation: animate 3s linear infinite;
                         transform-origin: top left;
                     }
-    
+
                     #DiscordEffects span::before {
                         content: '';
                         position: absolute;
@@ -669,7 +380,7 @@ module.exports = class DiscordEffects {
                         height: 1px;
                         background: linear-gradient(90deg, #fff, transparent);
                     }
-    
+
                     @keyframes animate {
                         0% {
                             transform: rotate(${angle}deg) translateX(0);
@@ -683,7 +394,7 @@ module.exports = class DiscordEffects {
                             opacity: 0;
                         }
                     }
-    
+
                     ${generateSpanStyles(this.settings.spanCount, shootingStarsStyles)}
                     ${generateRandomKeyframes(this.settings.spanCount)}
                 `;
@@ -696,27 +407,27 @@ module.exports = class DiscordEffects {
                         width: 100%;
                         height: 100vh;
                         background-size: cover;
-                        z-index: 0;
+                        z-index: ${this.settings.zindexamount};
                     }
-    
+
                     #DiscordEffects span {
                         position: absolute;
                         top: -10px;
                         width: 10px;
                         height: 10px;
-                        background: white;
-                        opacity: 0.8;
+                        background: ${this.settings.flakecolor || 'white'};
+                        opacity: ${this.settings.flakeopacity || 0.8};
                         border-radius: 50%;
                         animation: fall 10s linear infinite;
                     }
-    
+
                     @keyframes fall {
                         to {
                             transform: translateY(100vh);
                             opacity: 0;
                         }
                     }
-    
+
                     ${generateSpanStyles(this.settings.spanCount, snowflakesStyles)}
                     ${generateRandomKeyframes(this.settings.spanCount)}
                 `;
@@ -729,37 +440,36 @@ module.exports = class DiscordEffects {
                         width: 100%;
                         height: 100vh;
                         background-size: cover;
-                        z-index: 0;
+                        z-index: ${this.settings.zindexamount};
                     }
-    
+
                     #DiscordEffects span {
                         position: absolute;
                         top: -10px;
                         width: 2px;
                         height: 20px;
-                        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
-                        opacity: 0.6;
+                        background: ${this.settings.raincolor || 'linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1))'};
+                        opacity: ${this.settings.rainopacity || 0.6};
                         border-radius: 20%;
                         animation: fall 1s linear infinite;
                         animation-name: randomPosition${Math.floor(Math.random() * this.settings.spanCount)};
                     }
-    
+
                     @keyframes fall {
                         to {
                             transform: translateY(100vh);
                             opacity: 0;
                         }
                     }
-    
+
                     ${generateSpanStyles(this.settings.spanCount, rainStyles)}
                     ${generateRandomKeyframes(this.settings.spanCount)}
                 `;
+            default:
+                return '';
         }
     }
-    
-    
-    
-    
+
     getSettingsPanel() {
         return BdApi.UI.buildSettingsPanel({
             settings: config.settings.map(setting => {
@@ -772,7 +482,6 @@ module.exports = class DiscordEffects {
                                 ...subSetting,
                                 value: subValue,
                                 disabled: subSetting.id === 'mode' && this.settings.effect === 'shootingStars',
-                                disabled: subSetting.id === 'mode' && this.settings.effect === 'particles'
                             };
                         })
                     };
@@ -782,14 +491,13 @@ module.exports = class DiscordEffects {
                         ...setting,
                         value: settingValue,
                         disabled: setting.id === 'mode' && this.settings.effect === 'shootingStars',
-                        disabled: setting.id === 'mode' && this.settings.effect === 'particles'
                     };
                 }
             }),
             onChange: (category, id, value) => {
                 this.settings[id] = value;
                 this.api.Data.save("settings", this.settings);
-                if (id === 'spanCount') {
+                if (id === 'spanCount' || id === 'zindexamount') {
                     this.updateSpans();
                 } else {
                     this.updateEffect();
@@ -797,7 +505,7 @@ module.exports = class DiscordEffects {
             },
         });
     }
-    
+
     updateEffect() {
         this.removeSection();
         this.addSection();
