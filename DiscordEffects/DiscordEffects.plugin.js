@@ -1,7 +1,7 @@
 /**
  * @name DiscordEffects
  * @description Adds the ability to put effects on your discord.
- * @version 2.1.5
+ * @version 2.1.6
  * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/DiscordEffects/DiscordEffects.plugin.js
@@ -12,6 +12,14 @@
 
 const config = {
     changelog: [
+        {
+            title: "New options",
+            type: "added",
+            items: [
+                "Noticed some weird changes with the rain speed, or maybe i'm insane.",
+                "Added Rain speed modifier to make rain faster or slower. (obviously)"
+            ]
+        },
         {
             title: "BetterDiscord Compliance",
             type: "fixed",
@@ -44,14 +52,6 @@ const config = {
                 "Added modular effect colors using Color Pickers.",
                 "Added categories for each effect.",
                 "Added ability for it to work without a theme."
-            ]
-        },
-        {
-            title: "Fixes",
-            type: "fixed",
-            items: [
-                "Fixed a bug where pasting a large amount of text in chat would cause discord to feel insecure about its height.",
-                "Fixed a bug where it would show behind the Settings Menu and Channel Header by setting z-index to 101 any lower and it will hide behind these two."
             ]
         }
     ],
@@ -166,6 +166,16 @@ const config = {
                     min: 0,
                     max: 1,
                     step: .1
+                },
+                {
+                    type: "number",
+                    id: "rainmaxspeed",
+                    name: "Max rain speed",
+                    note: "Set the opacity for the rain",
+                    value: .5,
+                    min: 0,
+                    max: 100,
+                    step: .25
                 }
             ]
         }
@@ -188,7 +198,7 @@ module.exports = class DiscordEffects {
             this.api.UI.showChangelogModal({
                 title: this.meta.name,
                 subtitle: this.meta.version,
-                blurb: "Public Release of [Discord Effects](https://deleox.github.io/BDPlugins/DiscordEffects/DiscordEffects.plugin.js), [My bio](https://e-z.bio/retronomicon).",
+                blurb: "Public Release of [Discord Effects](https://deleox.github.io/BDPlugins/DiscordEffects/DiscordEffects.plugin.js), [My bio](https://deleoxhub.org/Web/bio).",
                 changes: config.changelog
             });
             this.api.Data.save("version", this.meta.version);
@@ -254,7 +264,7 @@ module.exports = class DiscordEffects {
                 span.style.borderRadius = '20%';
                 span.style.left = `${Math.random() * 100}%`;
                 span.style.animationDelay = `${Math.random() * 1}s`;
-                span.style.animationDuration = `${0.5 + Math.random() * 1}s`;
+                span.style.animationDuration = `${0.5 + Math.random() * this.settings.rainmaxspeed}s`;
                 span.style.animationName = 'fall';
                 span.style.animationIterationCount = 'infinite';
                 span.style.animationTimingFunction = 'linear';
@@ -262,11 +272,9 @@ module.exports = class DiscordEffects {
             section.appendChild(span);
         }
 
-        if (this.settings.mode) {
-            // Will be removed upon a complete rebuild, i hate this.
-        } else {
-            BdApi.DOM.addStyle('DiscordEffectsStyle', this.getEffectStyles());
-        }
+        
+        BdApi.DOM.addStyle('DiscordEffectsStyle', this.getEffectStyles());
+        
 
         const appMount = document.querySelector('#app-mount');
         if (appMount) {
