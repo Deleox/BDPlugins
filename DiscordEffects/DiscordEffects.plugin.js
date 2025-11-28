@@ -1,17 +1,25 @@
 /**
  * @name DiscordEffects
  * @description Adds the ability to put effects on your discord.
- * @version 2.1.6
+ * @version 2.1.8
  * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/DiscordEffects/DiscordEffects.plugin.js
- * @website https://e-z.bio/MSFR
+ * @website https://deleoxhub.org/Web/bio
  * Original Shooting Star CodePen By Delroy Prithvi - https://codepen.io/delroyprithvi/pen/LYyJROR
  * First plugin and learning experience so expect bugs and potentially awful code TT-TT
 */
 
 const config = {
     changelog: [
+        {
+            title: "More BD Compliance",
+            type: "added",
+            items: [
+                "Changed element creation to BdApi.DOM.CreateElement",
+                "Fixed a bug where effects wouldn't show until you change the span amount"
+            ]
+        },
         {
             title: "New options",
             type: "added",
@@ -69,28 +77,28 @@ const config = {
             ]
         },
         {
+            type: "slider",
+            id: "spanCount",
+            name: "Span Count",
+            note: "Adjust the number of spans for animation - More spans = more lag",
+            value: 10, // Default span count
+            min: 0,
+            max: 50,
+            markers: [10, 20, 30, 40, 50]
+         },
+        {
             type: "category",
             id: "AdvancedCat",
             name: "Advanced",
             collapsible: true,
             shown: false,
             settings: [
-                {
-                    type: "slider",
-                    id: "spanCount",
-                    name: "Span Count",
-                    note: "Adjust the number of spans for animation - More spans = more lag",
-                    value: 10, // Default span count
-                    min: 0,
-                    max: 50,
-                    markers: [10, 20, 30, 40, 50]
-                },
                 {   
                     type: "number",
                     id: "zindexamount",
                     name: "Set Z-Index",
                     note: "Allows modifying the z-index to reduce bugs with effects.",
-                    value: 1,
+                    value: 5,
                 },
             ]
         },
@@ -215,6 +223,8 @@ module.exports = class DiscordEffects {
             });
             this.api.Data.save("firstlaunch", "false");
         }
+        this.updateSpans();
+        this.spanCount += 1;
     }
 
     stop() {
@@ -228,7 +238,7 @@ module.exports = class DiscordEffects {
 
     addSection() {
         this.removeSection();
-        const section = document.createElement('div');
+        const section = BdApi.DOM.createElement('div');
         section.id = 'DiscordEffects';
         section.style.position = 'fixed';
         section.style.top = '0';
@@ -240,7 +250,7 @@ module.exports = class DiscordEffects {
         section.style.zIndex = this.settings.zindexamount;
 
         for (let i = 0; i < this.settings.spanCount; i++) {
-            const span = document.createElement('span');
+            const span = BdApi.DOM.createElement('span');
             span.style.position = 'absolute';
             if (this.settings.effect === 'snowflakes') {
                 span.style.top = '-10px';
