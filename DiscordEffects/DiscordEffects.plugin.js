@@ -290,8 +290,7 @@ module.exports = class DiscordEffects {
         if (appMount) {
             appMount.appendChild(section);
         } else {
-            console.error("If you're seeing this, you either have bigger issues or I somehow broke everything, I'm sorry :c");
-            console.error('#app-mount element not found.');
+            console.error("If you're seeing this, you either have bigger issues or I somehow broke everything, I'm sorry :c\r\n#app-mount element not found.");
         }
     }
 
