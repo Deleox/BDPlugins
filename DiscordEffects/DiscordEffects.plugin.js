@@ -1,11 +1,11 @@
 /**
  * @name DiscordEffects
  * @description Adds the ability to put effects on your discord.
- * @version 2.1.8
+ * @version 2.1.9
  * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/DiscordEffects/DiscordEffects.plugin.js
- * @website https://deleoxhub.org/Web/bio
+ * @website https://deleoxhub.org/Web/bio?p
  * Original Shooting Star CodePen By Delroy Prithvi - https://codepen.io/delroyprithvi/pen/LYyJROR
  * First plugin and learning experience so expect bugs and potentially awful code TT-TT
 */
@@ -13,53 +13,19 @@
 const config = {
     changelog: [
         {
+            title: "Bugfixes",
+            type: "fixed",
+            items: [
+                "Fixed spelling misteaks!! but serious, i don't know why the rain speed option had the note 'Rain opacity'...",
+                "Fixed the speed option and added one to the snowflakes, they now work."
+            ]
+        },
+        {
             title: "More BD Compliance",
             type: "added",
             items: [
                 "Changed element creation to BdApi.DOM.CreateElement",
                 "Fixed a bug where effects wouldn't show until you change the span amount"
-            ]
-        },
-        {
-            title: "New options",
-            type: "added",
-            items: [
-                "Noticed some weird changes with the rain speed, or maybe i'm insane.",
-                "Added Rain speed modifier to make rain faster or slower. (obviously)"
-            ]
-        },
-        {
-            title: "BetterDiscord Compliance",
-            type: "fixed",
-            items: [
-                "Updated style injection to use BdApi.DOM.addStyle instead of direct DOM manipulation.",
-                "Removed Particles.js effect and related settings to address guideline concerns.",
-                "Particles may be re-added in the future in a way that complies with the guidelines."
-            ]
-        },
-        {
-            title: "Deprecated Code Changed",
-            type: "fixed",
-            items: [
-                "Changed from using deprecated code.",
-                "Removed Unneeded Stuff"
-            ]
-        },
-        {
-            title: "Bugfix",
-            type: "fixed",
-            items: [
-                "Fixed a bug causing both Rain and Snowflake opacity options not being able to be changed properly"
-            ]
-        },
-        {
-            title: "Release + New Stuff",
-            type: "added",
-            items: [
-                "Added Snowflake and Rain Effects.",
-                "Added modular effect colors using Color Pickers.",
-                "Added categories for each effect.",
-                "Added ability for it to work without a theme."
             ]
         }
     ],
@@ -146,6 +112,16 @@ const config = {
                     min: 0,
                     max: 1,
                     step: .1
+                },
+                {
+                    type: "number",
+                    id: "flakemaxspeed",
+                    name: "Max Snowflake Speed",
+                    note: "Sets the snowflake speed",
+                    value: 15,
+                    min: 0,
+                    max: 50,
+                    step: .5
                 }
             ]
         },
@@ -179,7 +155,7 @@ const config = {
                     type: "number",
                     id: "rainmaxspeed",
                     name: "Max rain speed",
-                    note: "Set the opacity for the rain",
+                    note: "Set the speed for the rain",
                     value: .5,
                     min: 0,
                     max: 100,
@@ -206,7 +182,7 @@ module.exports = class DiscordEffects {
             this.api.UI.showChangelogModal({
                 title: this.meta.name,
                 subtitle: this.meta.version,
-                blurb: "Public Release of [Discord Effects](https://deleox.github.io/BDPlugins/DiscordEffects/DiscordEffects.plugin.js), [My bio](https://deleoxhub.org/Web/bio).",
+                blurb: "Public Release of [Discord Effects](https://deleox.github.io/BDPlugins/DiscordEffects/DiscordEffects.plugin.js), [Bio](https://deleoxhub.org/Web/bio).",
                 changes: config.changelog
             });
             this.api.Data.save("version", this.meta.version);
@@ -261,7 +237,8 @@ module.exports = class DiscordEffects {
                 span.style.borderRadius = '50%';
                 span.style.left = `${Math.random() * 100}%`;
                 span.style.animationDelay = `${Math.random() * 5}s`;
-                span.style.animationDuration = `${5 + Math.random() * 5}s`;
+                span.style.animationDuration = `${Math.random() * this.settings.flakemaxspeed}s`
+                //span.style.animationDuration = `${5 + Math.random() * 5}s`;
                 span.style.animationName = 'fall';
                 span.style.animationIterationCount = 'infinite';
                 span.style.animationTimingFunction = 'linear';
@@ -274,7 +251,7 @@ module.exports = class DiscordEffects {
                 span.style.borderRadius = '20%';
                 span.style.left = `${Math.random() * 100}%`;
                 span.style.animationDelay = `${Math.random() * 1}s`;
-                span.style.animationDuration = `${0.5 + Math.random() * this.settings.rainmaxspeed}s`;
+                span.style.animationDuration = `${Math.random() * this.settings.rainmaxspeed}s`;
                 span.style.animationName = 'fall';
                 span.style.animationIterationCount = 'infinite';
                 span.style.animationTimingFunction = 'linear';
@@ -498,7 +475,6 @@ module.exports = class DiscordEffects {
                             return {
                                 ...subSetting,
                                 value: subValue,
-                                disabled: subSetting.id === 'mode' && this.settings.effect === 'shootingStars',
                             };
                         })
                     };
@@ -507,7 +483,6 @@ module.exports = class DiscordEffects {
                     return {
                         ...setting,
                         value: settingValue,
-                        disabled: setting.id === 'mode' && this.settings.effect === 'shootingStars',
                     };
                 }
             }),
