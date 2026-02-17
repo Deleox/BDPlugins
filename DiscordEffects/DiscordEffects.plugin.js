@@ -1,31 +1,32 @@
 /**
+ * 
+ * Original Shooting Star CodePen By Delroy Prithvi - https://codepen.io/delroyprithvi/pen/LYyJROR
+ * First plugin and learning experience so expect bugs and potentially awful code TT-TT
+ * 
  * @name DiscordEffects
  * @description Adds the ability to put effects on your discord.
- * @version 2.1.9
+ * @version 2.2.0
  * @author Deleox
  * @authorId 1156430974008184962
  * @source https://github.com/Deleox/BDPlugins/blob/main/DiscordEffects/DiscordEffects.plugin.js
  * @website https://deleoxhub.org/Web/bio?p
- * Original Shooting Star CodePen By Delroy Prithvi - https://codepen.io/delroyprithvi/pen/LYyJROR
- * First plugin and learning experience so expect bugs and potentially awful code TT-TT
 */
 
 const config = {
     changelog: [
+        {
+            title: "Minor Changes",
+            type: "fixed",
+            items: [
+                "Changed the location of the credits to prevent them from being added to the end of the link."
+            ]
+        },
         {
             title: "Bugfixes",
             type: "fixed",
             items: [
                 "Fixed spelling misteaks!! but serious, i don't know why the rain speed option had the note 'Rain opacity'...",
                 "Fixed the speed option and added one to the snowflakes, they now work."
-            ]
-        },
-        {
-            title: "More BD Compliance",
-            type: "added",
-            items: [
-                "Changed element creation to BdApi.DOM.CreateElement",
-                "Fixed a bug where effects wouldn't show until you change the span amount"
             ]
         }
     ],
@@ -79,7 +80,7 @@ const config = {
                     type: "slider",
                     id: "angle",
                     name: "Star Angle",
-                    note: "Adjust the angle of the stars - refrain from use on live",
+                    note: "Adjust the angle of the stars",
                     value: 315, // Default angle
                     min: 0,
                     max: 360,
@@ -182,7 +183,7 @@ module.exports = class DiscordEffects {
             this.api.UI.showChangelogModal({
                 title: this.meta.name,
                 subtitle: this.meta.version,
-                blurb: "Public Release of [Discord Effects](https://deleox.github.io/BDPlugins/DiscordEffects/DiscordEffects.plugin.js), [Bio](https://deleoxhub.org/Web/bio).",
+                blurb: "[Discord Effects](https://deleox.github.io/BDPlugins/DiscordEffects/DiscordEffects.plugin.js) V2.2.0, [Bio](https://deleoxhub.org/Web/bio).",
                 changes: config.changelog
             });
             this.api.Data.save("version", this.meta.version);
